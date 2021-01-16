@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: Kernel
+    runs-on: ubuntu-latest
     steps:
 
     # 下载源码
@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-node@master
     - run: npm install
     - run: npm run build
-    - run: tar -zcvf release.tgz .nuxt static nuxt.config.js package.json package-lock.json pm2.config.json pm2.config.json
+    - run: tar -zcvf release.tgz .nuxt static nuxt.config.js package.json package-lock.json pm2.config.json
 
     # 发布 Release
     - name: Create Release
