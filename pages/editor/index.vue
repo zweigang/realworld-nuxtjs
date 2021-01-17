@@ -67,10 +67,10 @@ export default {
     return {
       tags:'',
       article: {
-        title: "ttt",
-        description: "ttt",
-        body: "ttt",
-        tagList: ['ttt','bbb'],
+        title: "",
+        description: "",
+        body: "",
+        tagList: [],
       },
       errors:{}
     }

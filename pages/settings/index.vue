@@ -87,17 +87,10 @@ export default {
       getUser().then(res=>{
         let { data } = res
         let { user } = data
-        console.log('data res:',res)
-        this.test(user);
         this.user = user
       })
     },
     methods:{
-      test(user){
-        user.image = 'https://pic2.zhimg.com/da8e974dc_is.jpg';
-        user.bio = 'https://gitee.com/zengweigang2020';
-        user.password = '12345678';
-      },
       onSubmit(){
         if(!this.checkUser(this.user)){
           return false;
