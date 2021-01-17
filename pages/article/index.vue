@@ -3,7 +3,11 @@
     <div class="banner">
       <div class="container">
         <h1>{{ article.title }}</h1>
-        <articleMeta :article="article"/>
+        <articleMeta 
+        v-if="article" 
+        :article="article"
+        @updateArticle="updateArticle"
+        />
       </div>
     </div>
 
@@ -16,7 +20,11 @@
       <hr />
 
       <div class="article-actions">
-        <articleMeta :article="article"/>
+        <articleMeta 
+        v-if="article" 
+        :article="article"
+        @updateArticle="updateArticle"
+        />
       </div>
 
       <div class="row">
@@ -33,13 +41,21 @@ import { getArticle } from '@/api/article'
 import MarkdownIt from 'markdown-it'
 import articleMeta from './components/article-meta'
 import ArticleComments from './components/article-comments'
+import { 
+  getProfiles
+  } from "@/api/follow"
 export default {
   name: 'ArticleIndex',
   async asyncData ({ params }) {
     const { data } = await getArticle(params.slug)
     const { article } = data
+    const profileRes = await getProfiles(article.author.username)
+    const { profile } = profileRes.data
+    article.followCount = profile.following ? 1: 0
+    article.followDisabled = false
     const md = new MarkdownIt()
     article.body = md.render(article.body)
+    article.favoriteDisabled = false
     return {
       article
     }
@@ -59,7 +75,12 @@ export default {
           }
         ]
       }
+  },
+  methods:{
+    updateArticle(article){
+      this.article = article
     }
+  }
 };
 </script>
 
